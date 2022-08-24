@@ -1,4 +1,5 @@
 # Travel-Guide
+Approach:
 Suppose you want to visit some famous sites in a city. You want to visit it in short duration of time.
 To make it work here we used Kruskal’s algorithm for proper route planning
 Here we are providing user 4 cities with list of places to visit.
