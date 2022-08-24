@@ -1,0 +1,459 @@
+#include <iostream> 
+#include <bits/stdc++.h>
+using namespace std; 
+class Edge
+{
+    public:
+    int source;
+    int dest;
+    int weight;
+};
+bool compare(Edge e1, Edge e2)
+{
+    return e1.weight< e2.weight;
+}
+int findparent(int v, int *parent)
+{
+    if(parent[v]==v)
+    {
+        return v;
+    }
+    return findparent(parent[v], parent);
+}
+void kruskal(Edge *input, int n, int E)
+{
+ sort(input, input+E, compare);
+ Edge *output= new Edge[n-1];
+ int *parent =new int[n];
+ for (int i=0; i<n; i++)
+ {
+  parent[i]=i;
+ }
+ int count=0; 
+ int i=0;
+ while (count !=n-1)
+ {
+  Edge currentEdge=input[i];
+  int sourceParent=findparent(currentEdge.source, parent);
+  int destParent=findparent(currentEdge.dest, parent);
+  if (sourceParent!=destParent)
+  {
+   output[count]=currentEdge;
+   count++;
+   parent[sourceParent]=destParent;
+  }
+  i++;
+ } 
+ cout<<"\nMST:\n";
+ int sum=0;
+ cout<<"Source  Destination  Distance\n";
+ for(int i=0;i<n-1;i++)
+ {
+  if(output[i].source<output[i].dest)
+  {
+   cout<<output[i].source+1<<"          "<<output[i].dest+1<<"          "<<output[i].weight<<endl; 
+   sum+=output[i].weight;
+  }
+  else
+  {
+   cout<<output[i].dest+1<<"          "<<output[i].source+1<<"          "<<output[i].weight<<endl;
+   sum+=output[i].weight;
+  }
+ }
+ cout<<"\nMinimum distance that need to be covered:"<<sum<<" km";
+}
+void suboptions(int n);
+void input_venice(int A[], int q);
+void input_paris(int A[], int q);
+void input_rome(int A[], int q);
+void input_prague(int A[], int q);
+void options()
+{
+ char ch='y';
+ while(ch=='y'||ch=='Y')
+ {
+  int n;
+  cout<<"\n1. Venice"<<"\n2. Paris"<<"\n3. Rome"<<"\n4. Prague"<<"\n5. Exit";
+  cout<<"\nEnter your choice:";
+  cin>>n;
+  if(n<1||n>4&&n!=5)
+  {
+   cout<<"Wrong choice entered\nDo you want to choose again?";
+   cin>>ch;
+  }
+  else if(n==5)
+   return; 
+  else
+   suboptions(n);
+ }
+}
+void suboptions(int n)
+{
+ if(n==1)
+ {
+  char a='y';
+  while(a=='y'||a=='Y')
+  {   
+   int q;
+   cout<<"\n1. Cannaregio\n2. Ponte Scalzi\n3. Santa Corce\n4. Del Orto\n5. Ferrovia\n6. Main Menu"; 
+   cout<<"\nEnter number of places you want to visit:";
+   cin>>q; 
+   if(q>=1&&q<=5)
+   {
+    int A[q];
+    cout<<"\nEnter the respective numbers:";
+    for(int i=0;i<q;++i)
+     cin>>A[i]; 
+    input_venice(A,q);
+    cout<<"\nDo you want to choose again from this menu?";
+    cin>>a;
+    if((a=='y')||(a=='Y'))
+     ;
+    else 
+     return; 
+   }
+   else if(q==6)
+    return;
+   else
+   {
+    cout<<"Wrong choice entered\nDo you want to choose again?";
+    cin>>a;
+   }
+  }
+ }
+ else if(n==2)
+ {
+  char a='y';
+  while(a=='y'||a=='Y')
+  {   
+   int q;
+   cout<<"\n1. Eiffel Tower\n2. Cathedrale Notre-Dame de Paris\n3. Louvre Museum\n4. Place de la Concorde";
+   cout<<"\n5. Arc de triomphe\n6. Main Menu";
+   cout<<"\nEnter number of places you want to visit:";
+   cin>>q; 
+   if(q>=1&&q<=5)
+   {
+    int A[q];
+    cout<<"\nEnter the respective numbers:";
+    for(int i=0;i<q;++i)
+     cin>>A[i]; 
+    input_paris(A,q);
+    cout<<"\nDo you want to choose again from this menu?";
+    cin>>a;
+    if((a=='y')||(a=='Y'))
+     ;
+    else 
+     return; 
+   }
+   else if(q==6)
+    return;
+   else
+   {
+    cout<<"Wrong choice entered\nDo you want to choose again?";
+    cin>>a;
+   }
+  }  
+ }
+ else if(n==3)
+ {
+  char a='y';
+  while(a=='y'||a=='Y')
+  {   
+   int q;
+   cout<<"\n1. Vatican City\n2. Vatican Museum\n3. Trevi Fountain\n4. The Pantheon";
+   cout<<"\n5. Colosseum\n6. Main Menu"; 
+   cout<<"\nEnter number of places you want to visit:";
+   cin>>q; 
+   if(q>=1&&q<=5)
+   {
+    int A[q];
+    cout<<"\nEnter the respective numbers:";
+    for(int i=0;i<q;++i)
+     cin>>A[i]; 
+    input_rome(A,q);
+    cout<<"\nDo you want to choose again from this menu?";
+    cin>>a;
+    if((a=='y')||(a=='Y'))
+     ;
+    else 
+     return; 
+   }
+   else if(q==6)
+    return;
+   else
+   {
+    cout<<"Wrong choice entered\nDo you want to choose again?";
+    cin>>a;
+   }
+  }  
+ } 
+ else if(n==4)
+ {
+  char a='y';
+  while(a=='y'||a=='Y')
+  {   
+   int q;
+   cout<<"\n1. Old town square\n2. Prague astle\n3. Podskali\n4. Prague 7\n5. Smichov\n6. Return";
+   cout<<"\nEnter number of places you want to visit:";
+   cin>>q; 
+   if(q>=1&&q<=5)
+   {
+    int A[q];
+    cout<<"\nEnter the respective numbers:";
+    for(int i=0;i<q;++i)
+     cin>>A[i]; 
+    input_prague(A,q);
+    cout<<"\nDo you want to choose again from this menu?";
+    cin>>a;
+    if((a=='y')||(a=='Y'))
+     ;
+    else 
+     return; 
+   }
+   else if(q==6)
+    return;
+   else
+   {
+    cout<<"Wrong choice entered\nDo you want to choose again?";
+    cin>>a;
+   }
+  }  
+ } 
+}
+void input_venice(int A[], int q)
+{
+ Edge *input=new Edge[10]; //Array of objects
+ input[0].source=0, input[0].dest=1, input[0].weight=6;
+ input[1].source=0, input[1].dest=2, input[1].weight=6; 
+ input[2].source=0, input[2].dest=3, input[2].weight=6;
+ input[3].source=0, input[3].dest=4, input[3].weight=6;  
+ input[4].source=1, input[4].dest=2, input[4].weight=1;
+ input[5].source=1, input[5].dest=4, input[5].weight=2;
+ input[6].source=1, input[6].dest=3, input[6].weight=3;
+ input[7].source=2, input[7].dest=3, input[7].weight=2;
+ input[8].source=2, input[8].dest=4, input[8].weight=7;
+ input[9].source=3, input[9].dest=4, input[9].weight=1;
+ int z=(q*(q-1))/2; //z is the number of paths required
+ Edge *venice=new Edge[z];
+ int count=0;
+ int B[5];
+ int temp=0;
+ for(int i=1;i<=5;++i)
+ {
+  int flag=0;
+  for(int j=0;j<q;++j)
+   if(i==A[j])
+   {
+    flag=1;
+    break;   
+   }
+   if(flag==0)
+   {
+    B[count]=i-1;
+    count++;
+   }
+ }
+ for(int i=0;i<10;++i)
+ {
+  int flag1=0, flag2=0;
+  for(int j=0;j<q;++j)
+   if(input[i].source==(A[j]-1))
+   { 
+    flag1=1;
+    break;
+   } 
+  for(int j=0;j<q;++j)  
+   if(input[i].dest==(A[j]-1))
+   { 
+    flag2=1;
+    break;
+   }
+  if((flag1==1)&&(flag2==1))  
+   {
+      venice[temp].source=input[i].source;
+      venice[temp].dest=input[i].dest;
+      venice[temp].weight=input[i].weight;
+      temp++;
+   }       
+ }
+ kruskal(venice, q, z); 
+}
+void input_paris(int A[], int q)
+{
+ Edge *input=new Edge[10]; //Array of objects
+ input[0].source=0, input[0].dest=1, input[0].weight=5.1;
+ input[1].source=0, input[1].dest=2, input[1].weight=3.9; 
+ input[2].source=0, input[2].dest=3, input[2].weight=2.5;
+ input[3].source=0, input[3].dest=4, input[3].weight=2;  
+ input[4].source=1, input[4].dest=2, input[4].weight=1.8;
+ input[5].source=1, input[5].dest=4, input[5].weight=5.2;
+ input[6].source=1, input[6].dest=3, input[6].weight=2.7;
+ input[7].source=2, input[7].dest=3, input[7].weight=1.7;
+ input[8].source=2, input[8].dest=4, input[8].weight=4;
+ input[9].source=3, input[9].dest=4, input[9].weight=2.1;
+ int z=(q*(q-1))/2; //z is the number of paths required
+ Edge *paris=new Edge[z];
+ int count=0;
+ int B[5];
+ int temp=0;
+ for(int i=1;i<=5;++i)
+ {
+  int flag=0;
+  for(int j=0;j<q;++j)
+   if(i==A[j])
+   {
+    flag=1;
+    break;   
+   }
+   if(flag==0)
+   {
+    B[count]=i-1;
+    count++;
+   }
+ }
+ for(int i=0;i<10;++i)
+ {
+  int flag1=0, flag2=0;
+  for(int j=0;j<q;++j)
+   if(input[i].source==(A[j]-1))
+   { 
+    flag1=1;
+    break;
+   } 
+  for(int j=0;j<q;++j)  
+   if(input[i].dest==(A[j]-1))
+   { 
+    flag2=1;
+    break;
+   }
+  if((flag1==1)&&(flag2==1))  
+   {
+      paris[temp].source=input[i].source;
+      paris[temp].weight=input[i].weight;
+      paris[temp].dest=input[i].dest;
+      temp++;
+   }       
+ }
+ kruskal(paris, q, z);  
+}
+void input_rome(int A[], int q)
+{
+ Edge *input=new Edge[10]; //Array of objects
+ input[0].source=0, input[0].dest=1, input[0].weight=2;
+ input[1].source=0, input[1].dest=2, input[1].weight=3; 
+ input[2].source=0, input[2].dest=3, input[2].weight=2;
+ input[3].source=0, input[3].dest=4, input[3].weight=5.6;  
+ input[4].source=1, input[4].dest=2, input[4].weight=3.4;
+ input[5].source=1, input[5].dest=4, input[5].weight=6.5;
+ input[6].source=1, input[6].dest=3, input[6].weight=3;
+ input[7].source=2, input[7].dest=3, input[7].weight=3;
+ input[8].source=2, input[8].dest=4, input[8].weight=1.9;
+ input[9].source=3, input[9].dest=4, input[9].weight=3.3;
+ int z=(q*(q-1))/2; //z is the number of paths required    
+ Edge *rome=new Edge[z];
+ int count=0;
+ int B[5];
+ int temp=0;
+ for(int i=1;i<=5;++i)
+ {
+  int flag=0;
+  for(int j=0;j<q;++j)
+   if(i==A[j])
+   {
+    flag=1;
+    break;   
+   }
+   if(flag==0)
+   {
+    B[count]=i-1;
+    count++;
+   }
+ }
+ for(int i=0;i<10;++i)
+ {
+  int flag1=0, flag2=0;
+  for(int j=0;j<q;++j)
+   if(input[i].source==(A[j]-1))
+   { 
+    flag1=1;
+    break;
+   } 
+  for(int j=0;j<q;++j)  
+   if(input[i].dest==(A[j]-1))
+   { 
+    flag2=1;
+    break;
+   }
+  if((flag1==1)&&(flag2==1))  
+   {
+      rome[temp].source=input[i].source;
+      rome[temp].dest=input[i].dest;
+      rome[temp].weight=input[i].weight;
+      temp++;
+   }       
+ }
+ kruskal(rome, q, z); 
+}
+void input_prague(int A[], int q)
+{
+ Edge *input=new Edge[10]; //Array of objects
+ input[0].source=0, input[0].dest=1, input[0].weight=4.2;
+ input[1].source=0, input[1].dest=2, input[1].weight=5.4; 
+ input[2].source=0, input[2].dest=3, input[2].weight=2.8;
+ input[3].source=0, input[3].dest=4, input[3].weight=3.3;  
+ input[4].source=1, input[4].dest=2, input[4].weight=5.8;
+ input[5].source=1, input[5].dest=4, input[5].weight=6.4;
+ input[6].source=1, input[6].dest=3, input[6].weight=3.8;
+ input[7].source=2, input[7].dest=3, input[7].weight=5.4;
+ input[8].source=2, input[8].dest=4, input[8].weight=1.5;
+ input[9].source=3, input[9].dest=4, input[9].weight=4.9;
+ int z=(q*(q-1))/2; //z is the number of paths required    
+ Edge *prague=new Edge[z];
+ int count=0;
+ int B[5];
+ int temp=0;
+ for(int i=1;i<=5;++i)
+ {
+  int flag=0;
+  for(int j=0;j<q;++j)
+   if(i==A[j])
+   {
+    flag=1;
+    break;   
+   }
+   if(flag==0)
+   {
+    B[count]=i-1;
+    count++;
+   }
+ }
+ for(int i=0;i<10;++i)
+ {
+  int flag1=0, flag2=0;
+  for(int j=0;j<q;++j)
+   if(input[i].source==(A[j]-1))
+   { 
+    flag1=1;
+    break;
+   } 
+  for(int j=0;j<q;++j)  
+   if(input[i].dest==(A[j]-1))
+   { 
+    flag2=1;
+    break;
+   }
+  if((flag1==1)&&(flag2==1))  
+   {
+      prague[temp].source=input[i].source;
+      prague[temp].dest=input[i].dest;
+      prague[temp].weight=input[i].weight;
+      temp++;
+   }       
+ }
+ kruskal(prague, q, z); 
+}
+int main() 
+{
+ options(); 
+ return 0;
+}
